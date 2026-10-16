@@ -1,0 +1,33 @@
+MEDICAL POLICY MP-KNEE-08
+Title: Magnetic Resonance Imaging (MRI) of the Knee - Indications
+Version: 1.0 | Effective date: 2026-07-01 | Owner: Clinical Policy Committee
+Note: Synthetic policy for demonstration only. Its structure is modelled on publicly published payer knee-MRI criteria; the wording is original.
+
+Section 1. Scope
+This policy covers MRI of the knee without contrast (CPT 73721) for members of any age.
+
+Section 2. Definitions
+2.1 Conservative therapy means a combination of two or more of: rest, ice, compression, elevation, non-steroidal anti-inflammatory drugs (NSAIDs), crutches or bracing, and range-of-motion or physiotherapy exercises.
+2.2 True locking means a sustained inability to fully extend the knee that lasts more than a moment, typically with the knee held in flexion. Brief "catching" or clicking that releases on its own is not true locking.
+2.3 Multi-view radiographs means plain X-rays of the affected knee in at least two projections (for example anteroposterior and lateral). A single view does not meet this definition.
+
+Section 3. Indications
+A knee MRI is considered medically necessary when ANY ONE of indications 3.1 to 3.6 is documented.
+3.1 Tumour: detection, staging or post-treatment evaluation of a known or suspected tumour of the knee.
+3.2 Non-traumatic symptoms: persistent knee pain, swelling or instability (giving way) that is not associated with an injury and has not responded to at least 3 weeks of conservative therapy. Duration is measured from the start date of conservative therapy to the date of the MRI request.
+3.3 Traumatic symptoms: persistent knee pain, swelling or instability following an injury that has not responded to conservative therapy, AND multi-view radiographs (Section 2.3) have excluded a fracture or loose body, AND the treating physician documents that the clinical picture remains uncertain.
+3.4 True locking: persistent true locking (Section 2.2) suggesting a torn meniscus or loose body.
+3.5 Infection: suspected septic arthritis or osteomyelitis of the knee when initial clinical and laboratory work-up is inconclusive.
+3.6 Osteochondral lesion: suspected osteochondritis dissecans or osteonecrosis when radiographs are not confirmatory.
+
+Section 4. Not medically necessary
+4.1 MRI performed to size or fit implants, or to manufacture patient-specific instruments, for total knee arthroplasty.
+4.2 MRI to monitor the progression of known arthritis.
+4.3 MRI for estimation of chronological age.
+4.4 Routine MRI after a knee injury when none of the indications in Section 3 is documented.
+
+Section 5. Required documentation
+The request must state: whether an injury occurred and its date, conservative therapy types with start date, radiograph date, number of views and result, examination findings, a description of any locking episodes, and the physician's rationale.
+
+Section 6. Review process
+Automated or AI-assisted tools may summarise evidence but must not issue coverage decisions. Every determination is made by a licensed clinical reviewer.

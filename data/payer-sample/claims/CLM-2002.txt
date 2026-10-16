@@ -1,0 +1,16 @@
+CLAIM FILE CLM-2002
+Patient ID: P-2002 | Age: 34 | Sex: Male
+Requested procedure: MRI right knee without contrast (CPT 73721)
+Request date: 2026-09-24 | Requesting physician: Dr. M. Okafor, Urgent Care
+
+Symptoms: Persistent right knee swelling and giving way since a twisting injury.
+
+Injury history: Twisted right knee playing basketball on 2026-09-01.
+
+Treatment history: Rest, ice, compression, elevation, ibuprofen and crutches since 2026-09-01. Little improvement.
+
+Imaging: X-ray right knee on 2026-09-03, single AP view only. Result: no obvious fracture.
+
+Physical examination (2026-09-22): Moderate effusion. Lateral joint line tenderness. Lachman negative.
+
+Physician rationale: Differential is lateral meniscus tear versus bone bruise; clinical picture uncertain.

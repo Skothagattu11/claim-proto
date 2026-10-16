@@ -1,0 +1,16 @@
+CLAIM FILE CLM-2005
+Patient ID: P-2005 | Age: 15 | Sex: Male
+Requested procedure: MRI right knee without contrast (CPT 73721)
+Request date: 2026-09-30 | Requesting physician: Dr. A. Novak, Paediatric Sports Medicine
+
+Symptoms: Activity-related right knee pain for 3 months, worse after football. Intermittent swelling.
+
+Injury history: No specific injury.
+
+Treatment history: Activity modification and ibuprofen since 2026-09-12.
+
+Imaging: X-ray right knee, AP, lateral and tunnel views, on 2026-09-10. Result: small lucent area at the lateral aspect of the medial femoral condyle, possible osteochondritis dissecans, not confirmatory.
+
+Physical examination (2026-09-26): Small effusion. Tenderness over the medial femoral condyle with the knee flexed. Positive Wilson test.
+
+Physician rationale: Suspected osteochondritis dissecans; MRI needed to assess lesion stability and guide treatment.

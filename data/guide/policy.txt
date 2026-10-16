@@ -1,0 +1,32 @@
+MEDICAL POLICY MP-KNEE-07
+Title: Magnetic Resonance Imaging (MRI) of the Knee - Medical Necessity Criteria
+Version: 3.0 | Effective date: 2026-01-01 | Owner: Clinical Policy Committee
+Note: Synthetic training policy for demonstration only.
+
+Section 1. Purpose
+This policy defines when an MRI of the knee without contrast (CPT 73721) is considered medically necessary for adult members aged 18 and over.
+
+Section 2. Definitions
+2.1 Conservative therapy means physiotherapy, a home exercise programme, anti-inflammatory or analgesic medication, bracing, or activity modification.
+2.2 Red-flag findings means suspected fracture not visible on X-ray, suspected infection, suspected tumour, a locked knee unable to extend, or acute traumatic injury with clinical signs of ligament rupture (positive Lachman test, positive pivot shift, or gross instability).
+
+Section 3. Coverage criteria
+A knee MRI is considered medically necessary when ALL of criteria 3.1, 3.2 and 3.3 are met, OR when criterion 3.4 applies.
+3.1 Conservative therapy: The member has completed at least 6 weeks of documented conservative therapy within the last 6 months, without adequate improvement. Duration is measured from the start date of therapy to the date of the MRI request.
+3.2 Plain X-ray: Weight-bearing plain radiographs of the affected knee were taken within 90 days before the MRI request, and the result is documented.
+3.3 Clinical findings: The treating physician documents at least one objective examination finding: positive McMurray test, joint line tenderness with mechanical symptoms (catching or locking), joint effusion, or ligamentous instability.
+3.4 Red-flag exception: When any red-flag finding (Section 2.2) is documented, criteria 3.1 is waived. An X-ray is still expected when fracture is suspected, but its absence does not delay the request.
+
+Section 4. Repeat imaging
+4.1 A repeat knee MRI within 12 months of a prior knee MRI is not medically necessary unless there is a documented new injury, a significant change in clinical findings, or planned surgery requiring updated imaging.
+
+Section 5. Not medically necessary
+5.1 Generalised knee pain without any objective finding listed in criterion 3.3.
+5.2 Known advanced osteoarthritis (Kellgren-Lawrence grade 3 or 4 on X-ray) when the MRI result would not change management, unless a red-flag finding is present.
+5.3 Screening or routine follow-up without new symptoms.
+
+Section 6. Required documentation
+The request must include: member age, symptom onset date, conservative therapy type with start and end dates, X-ray date and result, examination findings, prior MRI history, and the requesting physician's rationale.
+
+Section 7. Review process
+Automated or AI-assisted tools may summarise evidence but must not issue coverage decisions. Every determination is made by a licensed clinical reviewer.

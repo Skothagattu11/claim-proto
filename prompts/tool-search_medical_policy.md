@@ -1,0 +1,1 @@
+Searches medical policy MP-KNEE-07 (Knee MRI medical necessity criteria). Input a short search query about one criterion, e.g. "conservative therapy duration", "X-ray requirement", "red flag exceptions", "repeat MRI". Returns policy text with section numbers to cite.

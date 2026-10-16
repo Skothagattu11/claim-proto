@@ -1,0 +1,1 @@
+Reads one complete patient claim file and returns a structured summary of facts: demographics, request date, symptoms, conservative therapy with dates, X-ray, prior MRI, exam findings and red flags. Call this first whenever a claim ID such as CLM-1001 is mentioned. Input: "Extract all evidence for claim <ID>".

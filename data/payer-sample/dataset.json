@@ -1,0 +1,6 @@
+{
+  "policyId": "MP-KNEE-08",
+  "workflowName": "Claims Evidence Desk (Knee MRI RAG + Agents) - payer sample MP-KNEE-08",
+  "memoryKeySuffix": "_mp08",
+  "chatWebhookId": "5e2d8a17-3c4b-4f9e-a6d1-08b7c9e2f4a3"
+}

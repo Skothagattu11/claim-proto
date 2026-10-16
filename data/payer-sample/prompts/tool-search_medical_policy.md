@@ -1,0 +1,1 @@
+Searches medical policy MP-KNEE-08 (Knee MRI indications). Input a short search query about one topic, e.g. "non-traumatic conservative therapy 3 weeks", "injury multi-view radiographs", "true locking definition", "osteochondritis dissecans", "total knee arthroplasty implant", "not medically necessary". Returns policy text with section numbers to cite.

@@ -1,0 +1,16 @@
+CLAIM FILE CLM-2003
+Patient ID: P-2003 | Age: 45 | Sex: Male
+Requested procedure: MRI right knee without contrast (CPT 73721)
+Request date: 2026-10-05 | Requesting physician: Dr. R. Shah, Orthopaedics
+
+Symptoms: Occasional catching of the right knee when straightening it, which releases by itself after a second. Patient denies ever being unable to straighten the knee. Mild ache after running.
+
+Injury history: None reported.
+
+Treatment history: No conservative therapy documented.
+
+Imaging: No X-ray on file.
+
+Physical examination (2026-10-02): No effusion. Full range of motion. McMurray equivocal. Ligaments stable.
+
+Physician rationale: Knee locking suggestive of meniscal tear; requesting MRI to confirm.

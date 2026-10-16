@@ -1,0 +1,500 @@
+{
+  "id": "claims-evidence-desk",
+  "name": "Claims Evidence Desk (Knee MRI RAG + Agents)",
+  "nodes": [
+    {
+      "id": "6cdc65fa-575c-4f3b-b008-06174dd07317",
+      "name": "1. INGEST -- load documents",
+      "type": "n8n-nodes-base.manualTrigger",
+      "typeVersion": 1,
+      "position": [
+        0,
+        208
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "49f881dc-fdb3-4413-a91d-083a792d9c02",
+      "name": "Policy MP-KNEE-07 (text)",
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        208
+      ],
+      "parameters": {
+        "mode": "runOnceForAllItems",
+        "language": "javaScript",
+        "jsCode": "const policyText = `MEDICAL POLICY MP-KNEE-07\nTitle: Magnetic Resonance Imaging (MRI) of the Knee - Medical Necessity Criteria\nVersion: 3.0 | Effective date: 2026-01-01 | Owner: Clinical Policy Committee\nNote: Synthetic training policy for demonstration only.\n\nSection 1. Purpose\nThis policy defines when an MRI of the knee without contrast (CPT 73721) is considered medically necessary for adult members aged 18 and over.\n\nSection 2. Definitions\n2.1 Conservative therapy means physiotherapy, a home exercise programme, anti-inflammatory or analgesic medication, bracing, or activity modification.\n2.2 Red-flag findings means suspected fracture not visible on X-ray, suspected infection, suspected tumour, a locked knee unable to extend, or acute traumatic injury with clinical signs of ligament rupture (positive Lachman test, positive pivot shift, or gross instability).\n\nSection 3. Coverage criteria\nA knee MRI is considered medically necessary when ALL of criteria 3.1, 3.2 and 3.3 are met, OR when criterion 3.4 applies.\n3.1 Conservative therapy: The member has completed at least 6 weeks of documented conservative therapy within the last 6 months, without adequate improvement. Duration is measured from the start date of therapy to the date of the MRI request.\n3.2 Plain X-ray: Weight-bearing plain radiographs of the affected knee were taken within 90 days before the MRI request, and the result is documented.\n3.3 Clinical findings: The treating physician documents at least one objective examination finding: positive McMurray test, joint line tenderness with mechanical symptoms (catching or locking), joint effusion, or ligamentous instability.\n3.4 Red-flag exception: When any red-flag finding (Section 2.2) is documented, criteria 3.1 is waived. An X-ray is still expected when fracture is suspected, but its absence does not delay the request.\n\nSection 4. Repeat imaging\n4.1 A repeat knee MRI within 12 months of a prior knee MRI is not medically necessary unless there is a documented new injury, a significant change in clinical findings, or planned surgery requiring updated imaging.\n\nSection 5. Not medically necessary\n5.1 Generalised knee pain without any objective finding listed in criterion 3.3.\n5.2 Known advanced osteoarthritis (Kellgren-Lawrence grade 3 or 4 on X-ray) when the MRI result would not change management, unless a red-flag finding is present.\n5.3 Screening or routine follow-up without new symptoms.\n\nSection 6. Required documentation\nThe request must include: member age, symptom onset date, conservative therapy type with start and end dates, X-ray date and result, examination findings, prior MRI history, and the requesting physician's rationale.\n\nSection 7. Review process\nAutomated or AI-assisted tools may summarise evidence but must not issue coverage decisions. Every determination is made by a licensed clinical reviewer.`;\n\nreturn [{\n  json: {\n    text: policyText,\n    doc_id: 'MP-KNEE-07',\n    doc_type: 'medical_policy'\n  }\n}];"
+      }
+    },
+    {
+      "id": "74562810-2394-498d-8b8b-1dc0d78cb59b",
+      "name": "Insert policy chunks",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        448,
+        0
+      ],
+      "parameters": {
+        "mode": "insert",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "id",
+          "value": "medical_policy"
+        },
+        "clearStore": true
+      }
+    },
+    {
+      "id": "c4bbae0b-9b44-4e0d-9e65-cf2cf9122733",
+      "name": "Embeddings (policy ingest)",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        464,
+        224
+      ],
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "credentials": {}
+    },
+    {
+      "id": "a369d3dc-8832-49be-ae4e-ed05ea492795",
+      "name": "Policy Loader",
+      "type": "@n8n/n8n-nodes-langchain.documentDefaultDataLoader",
+      "typeVersion": 1.1,
+      "position": [
+        592,
+        224
+      ],
+      "parameters": {
+        "dataType": "json",
+        "jsonMode": "expressionData",
+        "jsonData": "={{ $json.text }}",
+        "textSplittingMode": "custom",
+        "options": {
+          "metadata": {
+            "metadataValues": [
+              {
+                "name": "doc_id",
+                "value": "={{ $json.doc_id }}"
+              },
+              {
+                "name": "doc_type",
+                "value": "={{ $json.doc_type }}"
+              }
+            ]
+          }
+        }
+      }
+    },
+    {
+      "id": "e0646d8f-2386-4578-acc0-2ef1db369805",
+      "name": "Policy Splitter",
+      "type": "@n8n/n8n-nodes-langchain.textSplitterRecursiveCharacterTextSplitter",
+      "typeVersion": 1,
+      "position": [
+        592,
+        432
+      ],
+      "parameters": {
+        "chunkSize": 800,
+        "chunkOverlap": 100,
+        "options": {}
+      }
+    },
+    {
+      "id": "835d05aa-97c2-4b48-8b47-b9e36970699c",
+      "name": "2. ASK -- chat with the Claims Desk",
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.5,
+      "position": [
+        0,
+        848
+      ],
+      "parameters": {
+        "public": false,
+        "options": {}
+      },
+      "webhookId": "b7f1c2d4-9a3e-4c5b-8f6d-1e2a3b4c5d6e"
+    },
+    {
+      "id": "083d1aaa-c35f-4363-812c-352935f5548e",
+      "name": "Claims Evidence Orchestrator",
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 3.1,
+      "position": [
+        480,
+        848
+      ],
+      "parameters": {
+        "promptType": "define",
+        "text": "={{ $json.chatInput }}{{ (m => m ? '\\n\\n[Reminder: call mri_reader_agent for ' + m[0].toUpperCase() + ' in this turn before answering.]' : '')($json.chatInput.match(/CLM-\\d+/i)) }}",
+        "options": {
+          "systemMessage": "You are the Claims Evidence Orchestrator for a health insurance claims desk.\nYou help a human claims reviewer decide on knee MRI pre-authorisation requests.\n\nYOUR ROLE\n- You DRAFT an evidence-based rationale. You NEVER make the decision.\n- Never write \"approved\", \"denied\" or \"rejected\" as a final outcome.\n- Use: \"criterion appears met\", \"criterion appears not met\", or \"evidence missing\".\n\nMANDATORY FIRST STEP\n- If the user message contains a claim ID (CLM-####), your first action in THIS turn must be\n  mri_reader_agent for that claim, even if the claim was discussed earlier. Facts remembered from\n  earlier turns do not count. Never write \"evidence missing until claim file reviewed\": review it.\n\nTOOLS\n1. mri_reader_agent: call FIRST whenever a claim ID (e.g. CLM-1001) is mentioned.\n   Ask it: \"Extract all evidence for claim <ID>\".\n2. search_medical_policy: search policy MP-KNEE-07. Use short, specific queries.\n3. date_diff: use for EVERY interval between two dates. Never count days yourself.\n4. calculator: other arithmetic only (it cannot read dates).\n\nHOW TO REVIEW A CLAIM (always all steps, whatever the question asks)\n- MP-KNEE-07 is met when ALL of 3.1, 3.2 and 3.3 are met, OR when 3.4 (red-flag exception) applies.\n- Search the policy for: 3.1 conservative therapy, 3.2 X-ray, 3.3 clinical findings,\n  2.2 + 3.4 red flags, 4.1 repeat imaging, and Section 5 not-medically-necessary.\n- Use date_diff for: therapy start date -> request date (3.1, at least 42 days),\n  X-ray date -> request date (3.2, at most 90 days), prior MRI date -> request date (4.1, within 365 days).\n- Call search_medical_policy for these sections in EVERY claim review, even if you searched\n  earlier in the conversation. Never rely on memory of the policy text.\n- For every numeric rule, write the measured value next to the policy limit and compare them\n  explicitly, e.g. \"189 days vs at most 90 days -> not met\"; \"246 days vs within 365 days -> within window\".\n- 3.3 is met only by the objective findings the policy lists (positive McMurray, joint line\n  tenderness WITH mechanical symptoms, joint effusion, ligamentous instability). Generalised\n  tenderness or crepitus alone does not meet it (see Section 5.1).\n- Apply the policy's definitions to the documented facts. A physician's label is not\n  evidence by itself; compare it with what the file actually describes.\n- If the question assumes a conclusion (e.g. \"does X rule it out?\"), still check every\n  criterion and exception before answering; correct the assumption if the evidence differs.\n\nRULES\n- Use only facts returned by your tools. If a fact is not in the claim file,\n  say \"not documented in claim file\". Never guess.\n- Every policy statement must carry a citation like [MP-KNEE-07, Section 3.1].\n- Every claim fact should name its source section, e.g. (Claim file: Treatment history).\n- Policy-only questions (no claim ID) need no claim lookup: answer from the policy with citations.\n- If the user asks something outside knee MRI claims, politely say you only\n  support MP-KNEE-07 claim reviews.\n\nOUTPUT FORMAT (whenever a claim is discussed)\nStart with one line that directly answers the user's question, then:\n\nDRAFT RATIONALE - FOR REVIEWER DECISION\nClaim: <ID> | Patient: <patient ID> | Request: <procedure>\n\nCriteria check:\n1. <criterion name> [policy citation]: <appears met / not met / evidence missing>\n   Evidence: <facts from claim file, with date_diff results where relevant>\n(repeat for 3.1, 3.2, 3.3)\n\nRed flags / exceptions (3.4): <yes/no + evidence + citation>\nRepeat imaging (4.1) and Section 5 exclusions: <none apply / which applies + evidence>\nGaps or documents to request: <list or \"none\">\nOverall draft view: <one sentence, non-binding>\n\nReviewer decision required. This draft is not a coverage decision.",
+          "maxIterations": 10
+        }
+      }
+    },
+    {
+      "id": "dc92b8c5-5f1d-47a2-bc2d-91dba48680d8",
+      "name": "OpenAI Chat Model (orchestrator)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        224,
+        1072
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4.1-mini"
+        },
+        "options": {
+          "temperature": 0.2
+        }
+      },
+      "credentials": {}
+    },
+    {
+      "id": "97593728-12f2-4c9e-9f6c-62c0cc2c33a5",
+      "name": "Simple Memory (window = 5)",
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.4,
+      "position": [
+        352,
+        1072
+      ],
+      "parameters": {
+        "sessionIdType": "fromInput",
+        "contextWindowLength": 5
+      }
+    },
+    {
+      "id": "e2ca45df-c624-4fe1-9f10-d37438d99358",
+      "name": "calculator",
+      "type": "@n8n/n8n-nodes-langchain.toolCalculator",
+      "typeVersion": 1,
+      "position": [
+        480,
+        1072
+      ],
+      "parameters": {}
+    },
+    {
+      "id": "aabb8ca2-11d6-45f2-8b2a-f9376dcf17e0",
+      "name": "date_diff",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        608,
+        1072
+      ],
+      "parameters": {
+        "description": "Exact number of days and weeks between two dates (YYYY-MM-DD). Use it for EVERY date interval, e.g. therapy start date to MRI request date, X-ray date to request date, prior MRI date to request date. Returns {days, weeks, full_weeks}; days is negative if end_date is before start_date.",
+        "language": "javaScript",
+        "specifyInputSchema": true,
+        "schemaType": "fromJson",
+        "jsonSchemaExample": "{\n  \"start_date\": \"2026-07-20\",\n  \"end_date\": \"2026-09-21\"\n}",
+        "jsCode": "const toUtc = (s) => {\n  const m = String(s).trim().match(/^(\\d{4})-(\\d{2})-(\\d{2})$/);\n  return m ? Date.UTC(+m[1], +m[2] - 1, +m[3]) : NaN;\n};\nconst start = toUtc(query.start_date);\nconst end = toUtc(query.end_date);\nif (isNaN(start) || isNaN(end)) return 'Dates must be YYYY-MM-DD, got: ' + JSON.stringify(query);\nconst days = Math.round((end - start) / 86400000);\nreturn JSON.stringify({\n  start_date: query.start_date,\n  end_date: query.end_date,\n  days,\n  weeks: Math.round((days / 7) * 10) / 10,\n  full_weeks: Math.trunc(days / 7),\n});"
+      }
+    },
+    {
+      "id": "0388b35b-e4c0-4a48-9dc0-8cc61d84e1c7",
+      "name": "search_medical_policy",
+      "type": "@n8n/n8n-nodes-langchain.vectorStoreInMemory",
+      "typeVersion": 1.3,
+      "position": [
+        736,
+        1072
+      ],
+      "parameters": {
+        "mode": "retrieve-as-tool",
+        "toolDescription": "Searches medical policy MP-KNEE-07 (Knee MRI medical necessity criteria). Input a short search query about one criterion, e.g. \"conservative therapy duration\", \"X-ray requirement\", \"red flag exceptions\", \"repeat MRI\". Returns policy text with section numbers to cite.",
+        "memoryKey": {
+          "__rl": true,
+          "mode": "id",
+          "value": "medical_policy"
+        },
+        "topK": 4,
+        "includeDocumentMetadata": true
+      }
+    },
+    {
+      "id": "a1929750-c619-4a36-b26e-ed197484dd7b",
+      "name": "Embeddings (policy query)",
+      "type": "@n8n/n8n-nodes-langchain.embeddingsOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        736,
+        1280
+      ],
+      "parameters": {
+        "model": "text-embedding-3-small",
+        "options": {}
+      },
+      "credentials": {}
+    },
+    {
+      "id": "949bd780-10ca-446a-8312-bae6aa1343c2",
+      "name": "mri_reader_agent",
+      "type": "@n8n/n8n-nodes-langchain.agentTool",
+      "typeVersion": 3,
+      "position": [
+        928,
+        1072
+      ],
+      "parameters": {
+        "toolDescription": "Reads one complete patient claim file and returns a structured summary of facts: demographics, request date, symptoms, conservative therapy with dates, X-ray, prior MRI, exam findings and red flags. Call this first whenever a claim ID such as CLM-1001 is mentioned. Input: \"Extract all evidence for claim <ID>\".",
+        "text": "={{ $fromAI('Prompt__User_Message_', ``, 'string') }}",
+        "options": {
+          "systemMessage": "You are the MRI Reader, a claims-file extraction assistant.\nYour only job: report facts from ONE claim file.\n\nSTEPS\n1. Identify the claim ID in the request (format CLM-####).\n2. Call get_claim_file once with that claim ID. It returns the complete file.\n3. If the tool says the claim was not found, reply with exactly that and stop.\n\nRETURN exactly this structure:\nClaim ID:\nPatient ID / age / sex:\nRequested procedure and request date:\nSymptoms and onset date (patient's own description, quoted):\nInjury event (if any, with date):\nConservative therapy (type, start date, end date, sessions):\nMedication:\nX-ray (date, number of views, weight-bearing yes/no, result):\nPrior MRI (date, result):\nPhysical exam findings (with date):\nRed-flag findings:\nRequesting physician notes (the physician's interpretation, quoted):\n\nRULES\n- Copy dates exactly as written (YYYY-MM-DD).\n- Read every section of the file before answering. Write \"not documented\" only when the\n  file truly does not contain the fact.\n- Keep what the patient/examination describes separate from the physician's interpretation;\n  do not merge them.\n- Do not interpret policy and do not give any opinion on coverage.",
+          "maxIterations": 6
+        }
+      }
+    },
+    {
+      "id": "3035ac61-2ff9-469c-9ea6-2c075e0d7f5c",
+      "name": "OpenAI Chat Model (MRI reader)",
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.3,
+      "position": [
+        864,
+        1280
+      ],
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "mode": "list",
+          "value": "gpt-4o-mini"
+        },
+        "options": {
+          "temperature": 0
+        }
+      },
+      "credentials": {}
+    },
+    {
+      "id": "c3444279-618e-4ff4-9254-cee16bce6ab7",
+      "name": "get_claim_file",
+      "type": "@n8n/n8n-nodes-langchain.toolCode",
+      "typeVersion": 1.3,
+      "position": [
+        992,
+        1280
+      ],
+      "parameters": {
+        "description": "Returns the COMPLETE claim file for one claim ID, exactly as submitted (every section). Input: the claim ID, e.g. \"CLM-1001\".",
+        "language": "javaScript",
+        "jsCode": "// Synthetic claim files (data/<dataset>/claims), keyed by claim ID.\nconst claims = {\n  'CLM-1001': `CLAIM FILE CLM-1001\nPatient ID: P-1001 | Age: 42 | Sex: Male\nRequested procedure: MRI right knee without contrast (CPT 73721)\nRequest date: 2026-09-21 | Requesting physician: Dr. A. Rao, Orthopaedics\n\nSymptoms: Right medial knee pain with catching and occasional locking. Onset 2026-07-05 after twisting the knee while climbing stairs.\n\nTreatment history: Physiotherapy from 2026-07-20 to 2026-09-14, 16 sessions, plus home exercise programme. Partial improvement only; catching persists.\n\nMedication: Naproxen 500 mg twice daily for 4 weeks. Limited relief.\n\nImaging: Weight-bearing X-ray right knee on 2026-08-25. Result: no fracture, joint spaces preserved, Kellgren-Lawrence grade 1. No prior knee MRI.\n\nPhysical examination (2026-09-18): Positive McMurray test medially. Medial joint line tenderness. Mild effusion. Ligaments stable, Lachman negative.\n\nPhysician rationale: Suspected medial meniscus tear with mechanical symptoms after 8+ weeks of conservative care. MRI needed for surgical planning.`,\n  'CLM-1002': `CLAIM FILE CLM-1002\nPatient ID: P-1002 | Age: 58 | Sex: Female\nRequested procedure: MRI left knee without contrast (CPT 73721)\nRequest date: 2026-09-15 | Requesting physician: Dr. S. Mehta, General Practice\n\nSymptoms: Chronic aching left knee pain for about 2 years, worse on stairs. No recent injury. No locking or giving way.\n\nTreatment history: Physiotherapy from 2026-08-24 to 2026-09-14, 6 sessions.\n\nMedication: Paracetamol as needed.\n\nImaging: Weight-bearing X-ray left knee on 2026-03-10. Result: severe joint space narrowing, osteophytes, Kellgren-Lawrence grade 4. Prior MRI left knee on 2026-01-12: degenerative changes, no new tear.\n\nPhysical examination (2026-09-12): Generalised tenderness. Crepitus. No effusion. McMurray negative. Ligaments stable.\n\nPhysician rationale: Patient requests updated imaging due to ongoing pain.`,\n  'CLM-1003': `CLAIM FILE CLM-1003\nPatient ID: P-1003 | Age: 27 | Sex: Male\nRequested procedure: MRI right knee without contrast (CPT 73721)\nRequest date: 2026-10-03 | Requesting physician: Dr. K. Iyer, Sports Medicine\n\nSymptoms: Acute right knee injury on 2026-09-28 during football. Felt a pop, immediate swelling, knee gives way when turning.\n\nTreatment history: Rest, ice, crutches and knee brace since 2026-09-28. No physiotherapy yet.\n\nMedication: Ibuprofen 400 mg three times daily.\n\nImaging: X-ray right knee on 2026-09-28. Result: no fracture, large effusion. No prior knee MRI.\n\nPhysical examination (2026-10-01): Positive Lachman test, positive pivot shift, large effusion. Gross anterior instability.\n\nPhysician rationale: Suspected anterior cruciate ligament rupture. Early MRI required to confirm and plan reconstruction.`,\n};\n\nconst id = (String(query).toUpperCase().match(/CLM-\\d+/) || [])[0];\nif (!id) return 'No claim ID found in the request. Use the format CLM-####.';\nif (!claims[id]) return 'Claim ' + id + ' not found. Known claims: ' + Object.keys(claims).join(', ');\nreturn claims[id];"
+      }
+    },
+    {
+      "id": "4342bea1-183a-4547-8a9b-414d21270b8a",
+      "name": "Sticky Note 4342bea1",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        -96
+      ],
+      "parameters": {
+        "content": "## 1 · INGEST -- split the policy into chunks\nRun once (and after every n8n restart). Loads MP-KNEE-07 into `medical_policy`. Claim files are read whole by get_claim_file, not searched.",
+        "color": 7,
+        "width": 736,
+        "height": 432
+      }
+    },
+    {
+      "id": "2c99c68d-2c11-4e0b-9a75-9b7f8bf93b25",
+      "name": "Sticky Note 2c99c68d",
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -32,
+        752
+      ],
+      "parameters": {
+        "content": "## 2 · ASK -- AI drafts, human decides\nOrchestrator agent → calls the MRI Reader sub-agent (reads the full claim file via get_claim_file), search_medical_policy (RAG over MP-KNEE-07), date_diff (exact day counts) and calculator. Output is a draft rationale with policy citations -- never a decision.",
+        "color": 5,
+        "width": 768,
+        "height": 224
+      }
+    }
+  ],
+  "connections": {
+    "1. INGEST -- load documents": {
+      "main": [
+        [
+          {
+            "node": "Policy MP-KNEE-07 (text)",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Policy MP-KNEE-07 (text)": {
+      "main": [
+        [
+          {
+            "node": "Insert policy chunks",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings (policy ingest)": {
+      "ai_embedding": [
+        [
+          {
+            "node": "Insert policy chunks",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Policy Loader": {
+      "ai_document": [
+        [
+          {
+            "node": "Insert policy chunks",
+            "type": "ai_document",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Policy Splitter": {
+      "ai_textSplitter": [
+        [
+          {
+            "node": "Policy Loader",
+            "type": "ai_textSplitter",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "2. ASK -- chat with the Claims Desk": {
+      "main": [
+        [
+          {
+            "node": "Claims Evidence Orchestrator",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (orchestrator)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Claims Evidence Orchestrator",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory (window = 5)": {
+      "ai_memory": [
+        [
+          {
+            "node": "Claims Evidence Orchestrator",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "calculator": {
+      "ai_tool": [
+        [
+          {
+            "node": "Claims Evidence Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "date_diff": {
+      "ai_tool": [
+        [
+          {
+            "node": "Claims Evidence Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "search_medical_policy": {
+      "ai_tool": [
+        [
+          {
+            "node": "Claims Evidence Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Embeddings (policy query)": {
+      "ai_embedding": [
+        [
+          {
+            "node": "search_medical_policy",
+            "type": "ai_embedding",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "mri_reader_agent": {
+      "ai_tool": [
+        [
+          {
+            "node": "Claims Evidence Orchestrator",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model (MRI reader)": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "mri_reader_agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "get_claim_file": {
+      "ai_tool": [
+        [
+          {
+            "node": "mri_reader_agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "settings": {
+    "executionOrder": "v1"
+  }
+}

@@ -1,0 +1,16 @@
+CLAIM FILE CLM-1001
+Patient ID: P-1001 | Age: 42 | Sex: Male
+Requested procedure: MRI right knee without contrast (CPT 73721)
+Request date: 2026-09-21 | Requesting physician: Dr. A. Rao, Orthopaedics
+
+Symptoms: Right medial knee pain with catching and occasional locking. Onset 2026-07-05 after twisting the knee while climbing stairs.
+
+Treatment history: Physiotherapy from 2026-07-20 to 2026-09-14, 16 sessions, plus home exercise programme. Partial improvement only; catching persists.
+
+Medication: Naproxen 500 mg twice daily for 4 weeks. Limited relief.
+
+Imaging: Weight-bearing X-ray right knee on 2026-08-25. Result: no fracture, joint spaces preserved, Kellgren-Lawrence grade 1. No prior knee MRI.
+
+Physical examination (2026-09-18): Positive McMurray test medially. Medial joint line tenderness. Mild effusion. Ligaments stable, Lachman negative.
+
+Physician rationale: Suspected medial meniscus tear with mechanical symptoms after 8+ weeks of conservative care. MRI needed for surgical planning.

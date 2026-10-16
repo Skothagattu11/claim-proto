@@ -1,0 +1,16 @@
+CLAIM FILE CLM-2004
+Patient ID: P-2004 | Age: 68 | Sex: Female
+Requested procedure: MRI left knee without contrast (CPT 73721)
+Request date: 2026-10-08 | Requesting physician: Dr. H. Lindqvist, Orthopaedic Surgery
+
+Symptoms: Long-standing left knee osteoarthritis pain. No new symptoms.
+
+Injury history: None.
+
+Treatment history: Total knee arthroplasty scheduled for 2026-11-12 after failed long-term conservative care.
+
+Imaging: Weight-bearing X-ray left knee, three views, on 2026-08-14. Result: Kellgren-Lawrence grade 4 osteoarthritis.
+
+Physical examination (2026-10-06): Varus deformity, crepitus, reduced flexion. No effusion.
+
+Physician rationale: MRI requested to produce patient-specific cutting guides and size the implant for the planned total knee arthroplasty.

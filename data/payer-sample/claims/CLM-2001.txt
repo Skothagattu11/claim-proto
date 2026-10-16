@@ -1,0 +1,16 @@
+CLAIM FILE CLM-2001
+Patient ID: P-2001 | Age: 51 | Sex: Female
+Requested procedure: MRI left knee without contrast (CPT 73721)
+Request date: 2026-09-28 | Requesting physician: Dr. L. Fernandes, Family Medicine
+
+Symptoms: Medial left knee pain and recurrent swelling for 6 weeks. No injury or fall. Knee occasionally gives way on stairs.
+
+Injury history: None reported.
+
+Treatment history: Conservative therapy started 2026-08-31: naproxen 500 mg twice daily, ice after activity, and a home range-of-motion exercise programme. Symptoms unchanged.
+
+Imaging: Weight-bearing X-ray left knee, two views (AP and lateral), on 2026-09-02. Result: mild medial joint space narrowing, no fracture, no loose body.
+
+Physical examination (2026-09-25): Moderate effusion. Medial joint line tenderness. Ligaments stable.
+
+Physician rationale: Persistent effusion and giving way despite 4 weeks of conservative care; suspect degenerative medial meniscus tear.

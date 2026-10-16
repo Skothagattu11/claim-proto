@@ -1,0 +1,16 @@
+CLAIM FILE CLM-1003
+Patient ID: P-1003 | Age: 27 | Sex: Male
+Requested procedure: MRI right knee without contrast (CPT 73721)
+Request date: 2026-10-03 | Requesting physician: Dr. K. Iyer, Sports Medicine
+
+Symptoms: Acute right knee injury on 2026-09-28 during football. Felt a pop, immediate swelling, knee gives way when turning.
+
+Treatment history: Rest, ice, crutches and knee brace since 2026-09-28. No physiotherapy yet.
+
+Medication: Ibuprofen 400 mg three times daily.
+
+Imaging: X-ray right knee on 2026-09-28. Result: no fracture, large effusion. No prior knee MRI.
+
+Physical examination (2026-10-01): Positive Lachman test, positive pivot shift, large effusion. Gross anterior instability.
+
+Physician rationale: Suspected anterior cruciate ligament rupture. Early MRI required to confirm and plan reconstruction.

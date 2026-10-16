@@ -1,0 +1,1 @@
+Exact number of days and weeks between two dates (YYYY-MM-DD). Use it for EVERY date interval, e.g. therapy start date to MRI request date, X-ray date to request date, prior MRI date to request date. Returns {days, weeks, full_weeks}; days is negative if end_date is before start_date.

@@ -1,0 +1,8 @@
+node_modules/
+.n8n-runtime/
+.n8n-data/
+.n8n-run.log
+.env
+
+# Local builds embed this machine's credential id; n8n/cloud/ holds the shareable import files
+n8n/claims-evidence-desk-*.json

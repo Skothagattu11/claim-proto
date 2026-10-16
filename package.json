@@ -1,0 +1,16 @@
+{
+  "name": "claim-proto",
+  "private": true,
+  "type": "module",
+  "description": "Claims Evidence Desk (Knee MRI RAG + Agents) - n8n workflow built in code with @n8n/workflow-sdk",
+  "scripts": {
+    "n8n": "node scripts/start-n8n.mjs",
+    "build": "node scripts/build-workflow.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "export": "node scripts/export.mjs",
+    "build:cloud": "node scripts/build-workflow.mjs --cloud"
+  },
+  "dependencies": {
+    "@n8n/workflow-sdk": "0.35.4"
+  }
+}

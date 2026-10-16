@@ -1,0 +1,16 @@
+CLAIM FILE CLM-1002
+Patient ID: P-1002 | Age: 58 | Sex: Female
+Requested procedure: MRI left knee without contrast (CPT 73721)
+Request date: 2026-09-15 | Requesting physician: Dr. S. Mehta, General Practice
+
+Symptoms: Chronic aching left knee pain for about 2 years, worse on stairs. No recent injury. No locking or giving way.
+
+Treatment history: Physiotherapy from 2026-08-24 to 2026-09-14, 6 sessions.
+
+Medication: Paracetamol as needed.
+
+Imaging: Weight-bearing X-ray left knee on 2026-03-10. Result: severe joint space narrowing, osteophytes, Kellgren-Lawrence grade 4. Prior MRI left knee on 2026-01-12: degenerative changes, no new tear.
+
+Physical examination (2026-09-12): Generalised tenderness. Crepitus. No effusion. McMurray negative. Ligaments stable.
+
+Physician rationale: Patient requests updated imaging due to ongoing pain.
